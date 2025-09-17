@@ -1,7 +1,37 @@
-﻿var builder = WebApplication.CreateBuilder(args);
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using TechStore.Application.Interfaces;
+using TechStore.Application.Services;
+using TechStore.Domain.Interfaces;
+using TechStore.Infrastructure.Data;
+using TechStore.Infrastructure.Repositories;
+
+var builder = WebApplication.CreateBuilder(args);
+
+
+//AA Configurar DbContext
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+    options.UseSqlServer(connectionString));
+
+//AA Registrar servicios
+builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<IProductRepository, ProductRepository>();
+
+//AA Agregar servicios
+builder.Services.AddRazorPages()
+    .AddRazorRuntimeCompilation();
+
+//AA MVC
+builder.Services.AddControllersWithViews()
+    .AddRazorRuntimeCompilation();
+
+// Add AutoMapper
+builder.Services.AddAutoMapper(typeof(Program).Assembly);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
 
 var app = builder.Build();
 

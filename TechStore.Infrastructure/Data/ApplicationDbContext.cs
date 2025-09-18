@@ -83,17 +83,7 @@ namespace TechStore.Infrastructure.Data
                     .IsUnique()
                     .HasDatabaseName("IX_Clientes_Documento");
 
-                // Relaciones
-                entity.HasMany(c => c.CarritoItems)
-                    .WithOne(ci => ci.Cliente)
-                    .HasForeignKey(ci => ci.ClienteId)
-                    .OnDelete(DeleteBehavior.Cascade);
-
-                entity.HasMany(c => c.Ordenes)
-                    .WithOne(o => o.Cliente)
-                    .HasForeignKey(o => o.ClienteId)
-                    .OnDelete(DeleteBehavior.Restrict);
-
+                // Nombre de tabla
                 entity.ToTable("Clientes");
             });
         }

@@ -15,8 +15,5 @@ namespace TechStore.Domain.Entities
         public string PasswordHash { get; set; } = string.Empty;
         public string Direccion { get; set; } = string.Empty;
         public string Telefono { get; set; } = string.Empty;
-
-        public virtual ICollection<CarritoItem> CarritoItems { get; set; }
-        public virtual ICollection<Orden> Ordenes { get; set; }
     }
 }

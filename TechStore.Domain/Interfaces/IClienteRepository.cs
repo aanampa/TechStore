@@ -11,9 +11,6 @@ namespace TechStore.Domain.Interfaces
     {
         Task<IEnumerable<Cliente>> GetAllAsync();
         Task<Cliente?> GetByIdAsync(Guid id);
-        Task<Cliente?> GetByIdWithCarritoAsync(Guid id);
-        Task<Cliente?> GetByIdWithOrdenesAsync(Guid id);
-        Task<Cliente?> GetByIdWithAllRelationsAsync(Guid id);
         Task<Cliente?> GetByEmailAsync(string email);
         Task<Cliente?> GetByDocumentoAsync(string documento);
         Task<Cliente> AddAsync(Cliente cliente);
@@ -22,8 +19,5 @@ namespace TechStore.Domain.Interfaces
         Task<bool> ExistsAsync(Guid id);
         Task<bool> EmailExistsAsync(string email);
         Task<bool> DocumentoExistsAsync(string documento);
-        Task<bool> CanDeleteClienteAsync(Guid id);
-        Task<IEnumerable<Cliente>> GetClientesActivosAsync();
-        Task<int> GetTotalClientesAsync();
     }
 }

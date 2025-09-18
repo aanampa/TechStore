@@ -25,6 +25,13 @@ namespace TechStore.Infrastructure.Data
         {
             base.OnModelCreating(modelBuilder);
 
+            // Configurar nombres de tablas
+            modelBuilder.Entity<Producto>().ToTable("Producto");
+            modelBuilder.Entity<Cliente>().ToTable("Cliente");
+            modelBuilder.Entity<Orden>().ToTable("Orden");
+            modelBuilder.Entity<DetalleOrden>().ToTable("DetallesOrden");
+            modelBuilder.Entity<CarritoItem>().ToTable("CarritoItem");
+
             // Configuraciones de las entidades
             modelBuilder.Entity<Producto>(entity =>
             {

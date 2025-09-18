@@ -23,16 +23,7 @@ cd TechStore
 
 ### 2. Abrir Solucion
 Ingresar a a carpeta TechStore
-Abrir soluction TechStore.sln usando Visual Studio NET 2022
-
-### 3. Creacion de Base de Datos
-- Conectarse a un SQL Server
-- Crear base de datos TechStore
-- Ejecutar script TechStore.sql
-- En proyecto TechStore.Web actualizar cadena de conexión en el archivo: appsettings.json"ConnectionStrings": 
-- {
-  "DefaultConnection": "Server=...."
-},
+Abrir soluction TechStore.sln, usando Visual Studio NET 2022
 
 ### 4. Ejecutar
 Ejecutar proyecto TechStore.Web

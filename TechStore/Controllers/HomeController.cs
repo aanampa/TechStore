@@ -19,6 +19,15 @@ namespace TechStore.Controllers
             _productService = productService;
         }
 
+        public async Task<IActionResult> Index()
+        {
+            ProductoViewModel model = new ProductoViewModel();
+
+            model.ProductoLista = await _productService.GetAllProductsAsync();
+
+            return View(model);
+        }
+
         public async Task<IActionResult> Catalogo()
         {
             ProductoViewModel model = new ProductoViewModel();
@@ -26,17 +35,7 @@ namespace TechStore.Controllers
             return View(model);
         }
 
-        public async Task<IActionResult> Index()
-        {
-            ProductoViewModel model = new ProductoViewModel();
-
-            model.ProductoLista = await _productService.GetAllProductsAsync();
-            //var products = await _productService.GetAllProductsAsync();
-
-            //ViewBag.Productos = products;
-
-            return View(model);
-        }
+      
 
         public IActionResult Privacy()
         {

@@ -43,6 +43,7 @@ namespace TechStore.Infrastructure.Data
 
             // Configuraciones similares para las demás entidades...
             // Configuración para Cliente
+            /*
             modelBuilder.Entity<Cliente>(entity =>
             {
                 entity.HasKey(e => e.Id);
@@ -93,6 +94,8 @@ namespace TechStore.Infrastructure.Data
                 // Nombre de tabla
                 entity.ToTable("Clientes");
             });
+            */
+
         }
     }
 }

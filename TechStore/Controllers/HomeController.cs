@@ -1,8 +1,9 @@
+using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
 using TechStore.Application.Interfaces;
 using TechStore.Models;
+using TechStore.Web.Models;
 
 namespace TechStore.Controllers
 {
@@ -18,13 +19,23 @@ namespace TechStore.Controllers
             _productService = productService;
         }
 
+        public async Task<IActionResult> Catalogo()
+        {
+            ProductoViewModel model = new ProductoViewModel();
+            model.ProductoLista = await _productService.GetAllProductsAsync();
+            return View(model);
+        }
+
         public async Task<IActionResult> Index()
         {
-            var products = await _productService.GetAllProductsAsync();
+            ProductoViewModel model = new ProductoViewModel();
 
-            var ss = products.ToList();
+            model.ProductoLista = await _productService.GetAllProductsAsync();
+            //var products = await _productService.GetAllProductsAsync();
 
-            return View();
+            //ViewBag.Productos = products;
+
+            return View(model);
         }
 
         public IActionResult Privacy()

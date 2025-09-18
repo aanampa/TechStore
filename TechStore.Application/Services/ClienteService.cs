@@ -9,7 +9,7 @@ using TechStore.Application.DTOs;
 using TechStore.Application.Interfaces;
 using TechStore.Domain.Entities;
 using TechStore.Domain.Interfaces;
-using BCrypt.Net;
+//using BCrypt.Net;
 
 namespace TechStore.Application.Services
 {
@@ -113,7 +113,7 @@ namespace TechStore.Application.Services
 
         private string HashPassword(string password)
         {
-            return BCrypt.Net.BCrypt.HashPassword(password);
+            return "";// BCrypt.Net.BCrypt.HashPassword(password);
         }
     }
 }

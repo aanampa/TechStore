@@ -1,10 +1,386 @@
-﻿@{
+﻿@model TechStore.Web.Models.ProductoViewModel
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
-sss
+@{
 
+    var lista = Model.ProductoLista;
+
+}
+
+@section Styles {
+
+    <style>
+        .product-card {
+            transition: transform 0.2s;
+            height: 100%;
+        }
+
+            .product-card:hover {
+                transform: translateY(-5px);
+            }
+
+        .product-image {
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .cart-sidebar {
+            position: fixed;
+            right: -400px;
+            top: 0;
+            width: 400px;
+            height: 100vh;
+            background: white;
+            transition: right 0.3s;
+            z-index: 1050;
+            border-left: 1px solid #dee2e6;
+        }
+
+            .cart-sidebar.show {
+                right: 0;
+            }
+
+        .cart-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1040;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
+        }
+
+            .cart-overlay.show {
+                opacity: 1;
+                visibility: visible;
+            }
+
+        .cart-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: #dc3545;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+
+}
+
+<!-- Hero Section -->
+<div class="bg-light py-5">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <h1 class="display-4 fw-bold">Los mejores productos tech</h1>
+                <p class="lead">Encuentra la tecnología más avanzada al mejor precio </p>
+            </div>
+            <div class="col-lg-6">
+                <img src="images/photo-1441986300917-64674bd600d8.jpg" class="img-fluid rounded" alt="Tech Store">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Products Section -->
+<div class="container my-5">
+    <h2 class="text-center mb-5">Nuestros Productos</h2>
+    <div class="row" id="productsContainer">
+        <!-- Los productos se cargarán aquí dinámicamente -->
+
+        @foreach (var item in Model.ProductoLista)
+        {
+
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card product-card shadow-sm">
+                    <img src="~/images/@item.ImagenUrl" class="card-img-top product-image" alt="@item.Nombre">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">@item.Nombre</h5>
+                        <p class="card-text flex-grow-1">@item.Descripcion</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h5 class="text-primary mb-0">$@item.Precio</h5>
+                            <button class="btn btn-primary" onclick="addToCart('@item.Id')">
+                                <i class="fas fa-cart-plus me-1"></i>Agregar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+
+
+    </div>
+</div>
+
+<!-- Cart Overlay -->
+<div class="cart-overlay" id="cartOverlay"></div>
+
+<!-- Cart Sidebar -->
+<div class="cart-sidebar" id="cartSidebar">
+    <div class="p-4 h-100 d-flex flex-column">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h5 class="mb-0">Carrito de Compras</h5>
+            <button class="btn btn-sm btn-outline-secondary" id="closeCartBtn">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+
+        <div class="flex-grow-1 overflow-auto" id="cartItems">
+            <!-- Items del carrito se cargarán aquí -->
+        </div>
+
+        <div class="border-top pt-3">
+            <div class="d-flex justify-content-between mb-3">
+                <strong>Total: $<span id="cartTotal">0.00</span></strong>
+            </div>
+            <button class="btn btn-success w-100 mb-2" id="checkoutBtn">
+                <i class="fas fa-credit-card me-2"></i>Proceder al Pago
+            </button>
+            <button class="btn btn-outline-danger w-100" id="clearCartBtn">
+                <i class="fas fa-trash me-2"></i>Vaciar Carrito
+            </button>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+
+    <script>
+        // Productos de ejemplo
+        const products = [
+            {
+                id: 1,
+                name: "iPhone 15 Pro",
+                price: 999.99,
+                image: "images/photo-1592899677977-9c10ca588bbd (1).jpg",
+                description: "El último iPhone con chip A17 Pro y cámara de 48MP"
+            },
+            {
+                id: 2,
+                name: "MacBook Air M2",
+                price: 1199.99,
+                image: "images/photo-1517336714731-489689fd1ca8 (1).jpg",
+                description: "Laptop ultradelgada con chip M2 y pantalla Liquid Retina"
+            },
+            {
+                id: 3,
+                name: "AirPods Pro",
+                price: 249.99,
+                image: "images/photo-1572569511254-d8f925fe2cbb (1).jpg",
+                description: "Auriculares inalámbricos con cancelación activa de ruido"
+            },
+            {
+                id: 4,
+                name: "Apple Watch Series 9",
+                price: 399.99,
+                image: "images/photo-1434494878577-86c23bcb06b9.jpg",
+                description: "Smartwatch con GPS, monitor de salud y pantalla Always-On"
+            },
+            {
+                id: 5,
+                name: "iPad Pro 12.9",
+                price: 1099.99,
+                image: "images/photo-1544244015-0df4b3ffc6b0.jpg",
+                description: "Tablet profesional con chip M2 y pantalla Liquid Retina XDR"
+            },
+            {
+                id: 6,
+                name: "Sony WH-1000XM5",
+                price: 349.99,
+                image: "images/photo-1505740420928-5e560c06d30e.jpg",
+                description: "Auriculares premium con la mejor cancelación de ruido"
+            }
+        ];
+
+        let cart = [];
+
+        // Renderizar productos
+        function renderProducts() {
+            const container = document.getElementById('productsContainer');
+            container.innerHTML = products.map(product => `
+                                                                        <div class="col-lg-4 col-md-6 mb-4">
+                                                                            <div class="card product-card shadow-sm">
+                                                                                <img src="${product.image}" class="card-img-top product-image" alt="${product.name}">
+                                                                                <div class="card-body d-flex flex-column">
+                                                                                    <h5 class="card-title">${product.name}</h5>
+                                                                                    <p class="card-text flex-grow-1">${product.description}</p>
+                                                                                    <div class="d-flex justify-content-between align-items-center">
+                                                                                        <h5 class="text-primary mb-0">$${product.price}</h5>
+                                                                                        <button class="btn btn-primary" onclick="addToCart(${product.id})">
+                                                                                            <i class="fas fa-cart-plus me-1"></i>Agregar
+                                                                                        </button>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    `).join('');
+        }
+
+        // Agregar al carrito
+        function addToCart(productId) {
+            const product = products.find(p => p.id === productId);
+            const existingItem = cart.find(item => item.id === productId);
+
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({ ...product, quantity: 1 });
+            }
+
+            updateCartUI();
+            showToast(`${product.name} agregado al carrito`);
+        }
+
+        // Actualizar interfaz del carrito
+        function updateCartUI() {
+            const cartBadge = document.getElementById('cartBadge');
+            const cartItems = document.getElementById('cartItems');
+            const cartTotal = document.getElementById('cartTotal');
+
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+
+            // Actualizar badge
+            if (totalItems > 0) {
+                cartBadge.textContent = totalItems;
+                cartBadge.classList.remove('d-none');
+            } else {
+                cartBadge.classList.add('d-none');
+            }
+
+            // Actualizar items del carrito
+            if (cart.length === 0) {
+                cartItems.innerHTML = '<div class="text-center py-4 text-muted">Tu carrito está vacío</div>';
+            } else {
+                cartItems.innerHTML = cart.map(item => `
+                                                                            <div class="card mb-3">
+                                                                                <div class="row g-0">
+                                                                                    <div class="col-4">
+                                                                                        <img src="${item.image}" class="img-fluid rounded-start h-100" style="object-fit: cover;" alt="${item.name}">
+                                                                                    </div>
+                                                                                    <div class="col-8">
+                                                                                        <div class="card-body p-3">
+                                                                                            <h6 class="card-title mb-1">${item.name}</h6>
+                                                                                            <p class="card-text mb-2">$${item.price}</p>
+                                                                                            <div class="d-flex justify-content-between align-items-center">
+                                                                                                <div class="btn-group btn-group-sm">
+                                                                                                    <button class="btn btn-outline-secondary" onclick="updateQuantity(${item.id}, ${item.quantity - 1})">-</button>
+                                                                                                    <span class="btn btn-outline-secondary disabled">${item.quantity}</span>
+                                                                                                    <button class="btn btn-outline-secondary" onclick="updateQuantity(${item.id}, ${item.quantity + 1})">+</button>
+                                                                                                </div>
+                                                                                                <button class="btn btn-sm btn-outline-danger" onclick="removeFromCart(${item.id})">
+                                                                                                    <i class="fas fa-trash"></i>
+                                                                                                </button>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        `).join('');
+            }
+
+            // Actualizar total
+            cartTotal.textContent = total.toFixed(2);
+        }
+
+        // Actualizar cantidad
+        function updateQuantity(productId, newQuantity) {
+            if (newQuantity <= 0) {
+                removeFromCart(productId);
+            } else {
+                const item = cart.find(item => item.id === productId);
+                item.quantity = newQuantity;
+                updateCartUI();
+            }
+        }
+
+        // Remover del carrito
+        function removeFromCart(productId) {
+            cart = cart.filter(item => item.id !== productId);
+            updateCartUI();
+        }
+
+        // Mostrar/ocultar carrito
+        function toggleCart() {
+            const cartSidebar = document.getElementById('cartSidebar');
+            const cartOverlay = document.getElementById('cartOverlay');
+
+            cartSidebar.classList.toggle('show');
+            cartOverlay.classList.toggle('show');
+        }
+
+        // Mostrar toast
+        function showToast(message) {
+            // Crear toast dinámicamente
+            const toastContainer = document.createElement('div');
+            toastContainer.className = 'toast-container position-fixed bottom-0 end-0 p-3';
+            toastContainer.style.zIndex = '1060';
+
+            toastContainer.innerHTML = `
+                                                                        <div class="toast show" role="alert">
+                                                                            <div class="toast-body bg-success text-white">
+                                                                                <i class="fas fa-check-circle me-2"></i>${message}
+                                                                            </div>
+                                                                        </div>
+                                                                    `;
+
+            document.body.appendChild(toastContainer);
+
+            setTimeout(() => {
+                document.body.removeChild(toastContainer);
+            }, 3000);
+        }
+
+        // Event listeners
+        document.getElementById('cartBtn').addEventListener('click', toggleCart);
+        document.getElementById('closeCartBtn').addEventListener('click', toggleCart);
+        document.getElementById('cartOverlay').addEventListener('click', toggleCart);
+
+        document.getElementById('clearCartBtn').addEventListener('click', () => {
+            cart = [];
+            updateCartUI();
+            showToast('Carrito vaciado');
+        });
+
+        document.getElementById('checkoutBtn').addEventListener('click', () => {
+            if (cart.length > 0) {
+                alert('¡Gracias por tu compra! Total: $' + document.getElementById('cartTotal').textContent);
+                cart = [];
+                updateCartUI();
+                toggleCart();
+            } else {
+                alert('Tu carrito está vacío');
+            }
+        });
+
+        // Inicializar
+        //renderProducts();
+        updateCartUI();
+    </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+}

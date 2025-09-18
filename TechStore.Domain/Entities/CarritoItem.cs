@@ -11,6 +11,7 @@ namespace TechStore.Domain.Entities
         public Guid ClienteId { get; set; }
         public Guid ProductoId { get; set; }
         public int Cantidad { get; set; } = 1;
+        public decimal PrecioUnitario { get; set; }
 
         public virtual Cliente Cliente { get; set; }
         public virtual Producto Producto { get; set; }

@@ -42,6 +42,57 @@ namespace TechStore.Infrastructure.Data
             });
 
             // Configuraciones similares para las demás entidades...
+            // Configuración para Cliente
+            modelBuilder.Entity<Cliente>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+
+                entity.Property(e => e.Id)
+                    .IsRequired()
+                    .ValueGeneratedOnAdd();
+
+                entity.Property(e => e.Documento)
+                    .IsRequired()
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.Nombre)
+                    .IsRequired()
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.Apellido)
+                    .IsRequired()
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.Email)
+                    .IsRequired()
+                    .HasMaxLength(100);
+
+                entity.Property(e => e.PasswordHash)
+                    .IsRequired()
+                    .HasMaxLength(255);
+
+                entity.Property(e => e.Direccion)
+                    .HasMaxLength(200);
+
+                entity.Property(e => e.Telefono)
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.FechaCreacion)
+                    .IsRequired()
+                    .HasDefaultValueSql("GETUTCDATE()");
+
+                // Índices únicos
+                entity.HasIndex(e => e.Email)
+                    .IsUnique()
+                    .HasDatabaseName("IX_Clientes_Email");
+
+                entity.HasIndex(e => e.Documento)
+                    .IsUnique()
+                    .HasDatabaseName("IX_Clientes_Documento");
+
+                // Nombre de tabla
+                entity.ToTable("Clientes");
+            });
         }
     }
 }

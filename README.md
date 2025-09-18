@@ -12,8 +12,9 @@ Integrantes:
 
 - .NET CORE 8.0
 - Git
-- Visual Studio NET 2022
-- Sql Server 2014 o superior
+- Visual Studio NET 2022 version Community
+-- https://visualstudio.microsoft.com/es/vs/
+- SQL Server 2014 o superior
 
 ## Instalación y Ejecución
 

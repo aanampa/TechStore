@@ -1,0 +1,18 @@
+-- comandos basicos
+
+git status
+git add .
+git commit -m "script base de datos"
+git commit -m "script git comandos"
+git commit -m "Models"
+git push -u origin antonio_v1
+
+---
+Bajar ramas:
+git fetch origin
+
+Ver ramas:
+git branch -a
+
+Cambiar de rama:
+git checkout -b antonio_v1 origin/antonio_v1

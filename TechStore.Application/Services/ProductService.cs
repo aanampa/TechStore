@@ -17,10 +17,12 @@ namespace TechStore.Application.Services
             _mapper = mapper;
         }
 
+
         public async Task<IEnumerable<ProductDto>> GetAllProductsAsync()
         {
             var products = await _productRepository.GetAllProductsAsync();
-            return _mapper.Map<IEnumerable<ProductDto>>(products);
+            //return _mapper.Map<IEnumerable<ProductDto>>(products);
+            return products.Select(MapToDto).ToList();
         }
 
         public async Task<IEnumerable<ProductDto>> GetActiveProductsAsync()
@@ -87,5 +89,57 @@ namespace TechStore.Application.Services
         {
             return await _productRepository.IncreaseStockAsync(productId, quantity);
         }
+
+        #region Mappings
+
+        private ProductDto MapToDto(Producto producto)
+        {
+            if (producto == null) return null;
+
+            return new ProductDto
+            {
+                Id = producto.Id,
+                Nombre = producto.Nombre,
+                Descripcion = producto.Descripcion,
+                Precio = producto.Precio,
+                Categoria = producto.Categoria,
+                ImagenUrl = producto.ImagenUrl,
+                Stock = producto.Stock,
+                Activo = producto.Activo
+            };
+        }
+
+        private Producto MapToEntity(ProductDto productDto)
+        {
+            if (productDto == null) return null;
+
+            return new Producto
+            {
+                Id = productDto.Id,
+                Nombre = productDto.Nombre,
+                Descripcion = productDto.Descripcion,
+                Precio = productDto.Precio,
+                Categoria = productDto.Categoria,
+                ImagenUrl = productDto.ImagenUrl,
+                Stock = productDto.Stock,
+                Activo = productDto.Activo
+            };
+        }
+
+        private void UpdateEntityFromDto(Producto entity, ProductDto dto)
+        {
+            entity.Nombre = dto.Nombre;
+            entity.Descripcion = dto.Descripcion;
+            entity.Precio = dto.Precio;
+            entity.Categoria = dto.Categoria;
+            entity.ImagenUrl = dto.ImagenUrl;
+            entity.Stock = dto.Stock;
+            entity.Activo = dto.Activo;
+        }
+
+
+        #endregion
+
+
     }
 }

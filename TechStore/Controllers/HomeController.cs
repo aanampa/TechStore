@@ -1,5 +1,7 @@
 using System.Diagnostics;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using TechStore.Application.Interfaces;
 using TechStore.Models;
 
 namespace TechStore.Controllers
@@ -8,13 +10,20 @@ namespace TechStore.Controllers
     {
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        private readonly IProductService _productService;
+
+        public HomeController(ILogger<HomeController> logger, IProductService productService)
         {
             _logger = logger;
+            _productService = productService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
+            var products = await _productService.GetAllProductsAsync();
+
+            var ss = products.ToList();
+
             return View();
         }
 

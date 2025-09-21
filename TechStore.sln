@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.13.35919.96 d17.13
+VisualStudioVersion = 17.13.35919.96
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TechStore.Web", "TechStore\TechStore.Web.csproj", "{02D6134A-4B1F-47AE-B0D2-212175C240F7}"
 EndProject
@@ -10,6 +10,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TechStore.Application", "TechStore.Application\TechStore.Application.csproj", "{D378856D-5E0A-43D0-BBF4-135BE9C84032}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TechStore.Infrastructure", "TechStore.Infrastructure\TechStore.Infrastructure.csproj", "{F1807BC3-611F-4FF3-AF67-47FFC9787A8B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TechStore.WebApi", "TechStore.WebApi\TechStore.WebApi.csproj", "{398AD159-0B23-451E-9FA3-26343C942FA0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{F1807BC3-611F-4FF3-AF67-47FFC9787A8B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F1807BC3-611F-4FF3-AF67-47FFC9787A8B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F1807BC3-611F-4FF3-AF67-47FFC9787A8B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{398AD159-0B23-451E-9FA3-26343C942FA0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{398AD159-0B23-451E-9FA3-26343C942FA0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{398AD159-0B23-451E-9FA3-26343C942FA0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{398AD159-0B23-451E-9FA3-26343C942FA0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

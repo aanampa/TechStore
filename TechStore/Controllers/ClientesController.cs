@@ -1,19 +1,35 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TechStore.Application.DTOs;
 using TechStore.Application.Interfaces;
+using TechStore.Application.Services;
+using TechStore.Controllers;
+using TechStore.Web.Models;
 
 namespace TechStore.AppWeb.Controllers
 {
-    [ApiController]
-    [Route("api/[controller]")]
-    public class ClientesController : ControllerBase
+
+    public class ClientesController : Controller
     {
+        private readonly ILogger<ClientesController> _logger;
         private readonly IClienteService _clienteService;
 
-        public ClientesController(IClienteService clienteService)
+        public ClientesController(
+            ILogger<ClientesController> logger, 
+            IClienteService clienteService)
         {
+            _logger = logger;
             _clienteService = clienteService;
         }
+
+        public async Task<IActionResult> Index()
+        {
+            //ProductoViewModel model = new ProductoViewModel();
+
+            var lista = await _clienteService.GetAllAsync();
+
+            return View();
+        }
+
 
         /// <summary>
         /// Obtiene todos los clientes

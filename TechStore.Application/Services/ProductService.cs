@@ -21,8 +21,12 @@ namespace TechStore.Application.Services
         public async Task<IEnumerable<ProductDto>> GetAllProductsAsync()
         {
             var products = await _productRepository.GetAllProductsAsync();
-            //return _mapper.Map<IEnumerable<ProductDto>>(products);
-            return products.Select(MapToDto).ToList();
+
+            var productDtos =  _mapper.Map<IEnumerable<ProductDto>>(products);
+            //return products.Select(MapToDto).ToList();
+
+            return productDtos.ToList();
+
         }
 
         public async Task<IEnumerable<ProductDto>> GetActiveProductsAsync()

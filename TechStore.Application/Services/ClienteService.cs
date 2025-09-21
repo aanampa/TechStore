@@ -1,10 +1,4 @@
 ﻿using AutoMapper;
-using Org.BouncyCastle.Crypto.Generators;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TechStore.Application.DTOs;
 using TechStore.Application.Interfaces;
 using TechStore.Domain.Entities;
@@ -113,7 +107,7 @@ namespace TechStore.Application.Services
 
         private string HashPassword(string password)
         {
-            return "";// BCrypt.Net.BCrypt.HashPassword(password);
+            return BCrypt.Net.BCrypt.HashPassword(password);
         }
     }
 }

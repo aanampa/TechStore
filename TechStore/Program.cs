@@ -5,6 +5,9 @@ using TechStore.Application.Services;
 using TechStore.Domain.Interfaces;
 using TechStore.Infrastructure.Data;
 using TechStore.Infrastructure.Repositories;
+using AutoMapper;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
+using static System.Net.Mime.MediaTypeNames;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,8 +18,12 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 
 //AA Registrar servicios
-builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
+builder.Services.AddScoped<IProductService, ProductService>();
+
+builder.Services.AddScoped<IClienteRepository, ClienteRepository>();
+builder.Services.AddScoped<IClienteService, ClienteService>();
+
 
 //AA Agregar servicios
 builder.Services.AddRazorPages()
@@ -26,8 +33,16 @@ builder.Services.AddRazorPages()
 builder.Services.AddControllersWithViews()
     .AddRazorRuntimeCompilation();
 
-// Add AutoMapper
-builder.Services.AddAutoMapper(typeof(Program).Assembly);
+//AA Add AutoMapper
+//builder.Services.AddAutoMapper(typeof(Program));
+//builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+//AA
+builder.Services.AddAutoMapper(
+    typeof(TechStore.Application.Mappings.ProductProfile).Assembly,
+    typeof(TechStore.Application.Mappings.ClienteProfile).Assembly
+);
+
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();

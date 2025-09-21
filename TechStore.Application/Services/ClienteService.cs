@@ -1,15 +1,9 @@
 ﻿using AutoMapper;
-using Org.BouncyCastle.Crypto.Generators;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TechStore.Application.DTOs;
 using TechStore.Application.Interfaces;
 using TechStore.Domain.Entities;
 using TechStore.Domain.Interfaces;
-using BCrypt.Net;
+//using BCrypt.Net;
 
 namespace TechStore.Application.Services
 {

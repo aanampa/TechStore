@@ -13,7 +13,7 @@ namespace TechStore.Application.Mappings
     {
         public ClienteProfile()
         {
-            /*
+            
             // Mapeo de Entity a DTO
             CreateMap<Cliente, ClienteDto>();
 
@@ -30,7 +30,7 @@ namespace TechStore.Application.Mappings
                 .ForMember(dest => dest.Documento, opt => opt.Ignore())
                 .ForMember(dest => dest.Email, opt => opt.Ignore())
                 .ForMember(dest => dest.PasswordHash, opt => opt.Ignore());
-            */
+            
         }
     }
 }
